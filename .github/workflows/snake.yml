@@ -17,6 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - uses: actions/checkout@v7 # 배경 스크립트(scripts/decorate_snake.py)를 쓰려고
+
       - name: Generate snake SVG
         uses: Platane/snk/svg-only@v3
         with:
@@ -26,6 +28,12 @@ jobs:
           outputs: |
             dist/github-snake.svg?color_snake=#ff8fab&color_dots=#fff0f4,#ffd6e2,#ffb3c8,#ff8fb0,#ff6b98&color_dot_border=#ffe3ea
             dist/github-snake-dark.svg?color_snake=#ffb3c8&color_dots=#21181d,#4d2a3a,#7a3b57,#b25580,#f28cb1&color_dot_border=#2b1f25
+
+      # snk 는 배경 그림 옵션이 없어서, 만들어진 SVG 뒤에 하늘·구름·잔디 언덕을 덧붙여요
+      - name: Add sky and grass background
+        run: |
+          python3 scripts/decorate_snake.py dist/github-snake.svg light
+          python3 scripts/decorate_snake.py dist/github-snake-dark.svg dark
 
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v5
