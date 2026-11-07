@@ -7,7 +7,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
-  <img alt="GitHub 기여 그래프의 칸을 따라 뱀이 지나가며 기여 기록을 먹는 애니메이션" src="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
+  <img alt="GitHub 기여 그래프. 구름이 흐르는 하늘과 꽃이 흔들리는 잔디 언덕 위에 기여한 날을 분홍 칸으로 표시" src="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
 </picture>
 
 <br>
