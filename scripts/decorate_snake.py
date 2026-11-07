@@ -1,5 +1,5 @@
 """snk 가 만든 기여 그래프 SVG 뒤에 하늘·구름·잔디 언덕 배경을 덧붙이고, 칸을 통통하게 키운다.
-뱀은 숨기고 칸이 먹혀 사라지는 애니메이션도 멈춰서 기여 칸은 가만히 두고, 구름이 흘러가고 꽃과 잔디 잎이 흔들리게 한다.
+뱀은 숨기고 칸이 먹혀 사라지는 애니메이션도 멈춰서 기여 칸은 가만히 두고, 구름이 계속 흘러가고 꽃과 잔디 잎이 흔들리게 한다.
 
 snk 는 SVG 배경 그림 옵션이 없어서, 생성된 파일을 열어 <svg> 바로 안쪽(셀보다 먼저)에
 배경 그룹을 넣고 위아래로 공간을 늘린다. 외부 이미지 없이 도형만 써서 GitHub 에서도 그대로 보인다.
@@ -49,16 +49,18 @@ THEMES = {
     },
 }
 
-# 구름: (x, y, 크기, 좌우로 움직이는 거리 px, 한 번 움직이는 시간 s)
-# 크기와 높이를 섞어서 한쪽에 몰려 보이지 않게, 서로 다른 속도로 흘러가게
+# 구름: (높이 y, 크기, 한 바퀴 시간 s, 시작 위치를 정하는 지연 s)
+# 왼쪽 밖에서 들어와 오른쪽 밖으로 계속 흘러간다. 속도가 달라 겹쳤다 떨어졌다 한다.
+# 가장 낮은 구름은 잔디 칸 바로 위(y≈0)까지 내려온다.
 CLOUDS = [
-    (40, -47, 0.70, 26, 17),
-    (185, -26, 1.15, -32, 23),
-    (360, -52, 0.60, 22, 15),
-    (500, -36, 0.95, -28, 20),
-    (665, -46, 0.80, 30, 25),
-    (805, -24, 1.05, -24, 19),
+    (-38, 1.50, 62, 0),
+    (-16, 1.15, 48, 14),
+    (-48, 0.90, 74, 33),
+    (-26, 1.60, 56, 40),
+    (-10, 0.95, 44, 9),
+    (-46, 1.10, 68, 52),
 ]
+CLOUD_FROM, CLOUD_TO = -130, 920  # 화면 왼쪽 밖 → 오른쪽 밖 (px)
 
 # 꽃: (x, y, 색 번호 0=분홍 1=노랑, 흔들리는 시간 s, 시작 지연 s)
 FLOWERS = [
@@ -87,13 +89,12 @@ ANIMATIONS = (
 )
 
 
-def cloud(i: int, x: float, y: float, s: float, dist: int, dur: int, t: dict) -> str:
-    """동글동글한 구름 하나. 구름마다 거리·속도가 달라 따로따로 흘러간다"""
+def cloud(y: float, s: float, dur: int, delay: int, t: dict) -> str:
+    """동글동글한 구름 하나. 바깥 g 가 왼쪽→오른쪽 이동, 안쪽 g 가 높이와 크기"""
     return (
-        f"<style>@keyframes drift{i}{{to{{transform:translateX({dist}px)}}}}</style>"
         f'<g opacity="{t["cloud_opacity"]}" '
-        f'style="animation:drift{i} {dur}s ease-in-out infinite alternate">'
-        f'<g transform="translate({x} {y}) scale({s})" fill="{t["cloud"]}">'
+        f'style="animation:cloudMove {dur}s linear infinite;animation-delay:-{delay}s">'
+        f'<g transform="translate(0 {y}) scale({s})" fill="{t["cloud"]}">'
         '<ellipse cx="0" cy="0" rx="22" ry="11"/>'
         '<circle cx="-10" cy="-6" r="10"/>'
         '<circle cx="6" cy="-9" r="13"/>'
@@ -124,7 +125,11 @@ def background(t: dict) -> str:
         "</linearGradient></defs>"
         f'<rect x="{X0}" y="{Y0}" width="{WIDTH}" height="{HEIGHT}" rx="14" fill="url(#skyGrad)"/>'
     )
-    clouds = "".join(cloud(i, *c, t) for i, c in enumerate(CLOUDS))
+    clouds = (
+        "<style>@keyframes cloudMove{"
+        f"from{{transform:translateX({CLOUD_FROM}px)}}to{{transform:translateX({CLOUD_TO}px)}}}}</style>"
+        + "".join(cloud(*c, t) for c in CLOUDS)
+    )
     hills = (
         f'<path fill="{t["hill_back"]}" d="M{X0} 160 C 120 128, 260 150, 400 140 '
         f'S 680 120, {X1} 150 L {X1} {Y1} L {X0} {Y1} Z"/>'
