@@ -1,0 +1,35 @@
+# 기여 그래프 뱀 애니메이션 생성 (Platane/snk 제작자 예시 워크플로 기준)
+# 결과 SVG 는 output 브랜치에 올라가고, README 가 그 파일을 불러와요.
+name: Generate contribution snake
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 매일 1번 (UTC 00:00 = 한국 09:00)
+  workflow_dispatch: # Actions 탭에서 직접 실행
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Generate snake SVG
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          # 파스텔 핑크 테마 — color_dots 는 [기여 0, 적음 → 많음] 순서로 5개
+          outputs: |
+            dist/github-snake.svg?color_snake=#f4a6b8&color_dots=#ebedf0,#ffe0e9,#ffc2d4,#ff9ebb,#f7739a
+            dist/github-snake-dark.svg?color_snake=#ffc2d4&color_dots=#161b22,#4a2a35,#7a3b52,#b4567a,#f08cad
+
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
