@@ -21,10 +21,11 @@ jobs:
         uses: Platane/snk/svg-only@v3
         with:
           github_user_name: ${{ github.repository_owner }}
-          # 파스텔 핑크 테마 — color_dots 는 [기여 0, 적음 → 많음] 순서로 5개
+          # 파스텔 핑크 테마 — 빈 칸도 연분홍으로 맞추고 칸 테두리를 부드럽게
+          # color_dots 는 [기여 0, 적음 → 많음] 순서로 5개 (snk outputsOptions 기준)
           outputs: |
-            dist/github-snake.svg?color_snake=#f4a6b8&color_dots=#ebedf0,#ffe0e9,#ffc2d4,#ff9ebb,#f7739a
-            dist/github-snake-dark.svg?color_snake=#ffc2d4&color_dots=#161b22,#4a2a35,#7a3b52,#b4567a,#f08cad
+            dist/github-snake.svg?color_snake=#ff8fab&color_dots=#fff0f4,#ffd6e2,#ffb3c8,#ff8fb0,#ff6b98&color_dot_border=#ffe3ea
+            dist/github-snake-dark.svg?color_snake=#ffb3c8&color_dots=#21181d,#4d2a3a,#7a3b57,#b25580,#f28cb1&color_dot_border=#2b1f25
 
       - name: Push to output branch
         uses: crazy-max/ghaction-github-pages@v5
