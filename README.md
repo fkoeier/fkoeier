@@ -1,8 +1,14 @@
 # 김혜원
 
-백엔드를 공부하고 있습니다. 주문처럼 두 번 실행되거나 중간에 실패하면 안 되는 요청을 다루는 데 관심이 많습니다.
+금융 데이터와 AI를 활용한 서비스의 백엔드를 개발합니다.
 
 [이메일](mailto:myjxjx1@naver.com) · [SSOK AI 서버 저장소](https://github.com/200ok-Hongik/200ok-AI)
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
+  <img alt="GitHub 기여 그래프의 칸을 따라 뱀이 지나가며 기여 기록을 먹는 애니메이션" src="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
+</picture>
 
 <br>
 
@@ -49,11 +55,3 @@
 ## 연락처
 
 myjxjx1@naver.com
-
-<br>
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
-  <img alt="GitHub 기여 그래프의 칸을 따라 뱀이 지나가며 기여 기록을 먹는 애니메이션" src="https://raw.githubusercontent.com/fkoeier/fkoeier/output/github-snake.svg">
-</picture>
